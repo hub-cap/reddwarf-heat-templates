@@ -40,16 +40,8 @@ Resources:
               content:
                 Fn::Join:
                 - ''
-                - - '[DEFAULT]
-
-                    '
-                  -  guest_id=
-                  -  {Ref: InstanceId}
-                  -  '
-
-                     '
-                  -  service_type=
-                  -  {Ref: ServiceType}
+                - ["[DEFAULT]\nguest_id=", {Ref: InstanceId},
+                  "\nservice_type=", {Ref: ServiceType}]
               mode: '000644'
               owner: root
               group: root
@@ -68,9 +60,7 @@ Resources:
         Fn::Base64:
           Fn::Join:
           - ''
-          - ['#!/bin/bash -v
-
-              ', cfn-init]
+          - ["#!/bin/bash -v\n", cfn-init]
   DataVolume:
     Type: AWS::EC2::Volume
     Properties:
@@ -84,4 +74,3 @@ Resources:
       InstanceId: {Ref: DatabaseInstance}
       VolumeId: {Ref: DataVolume}
       Device: /dev/vdb
-
